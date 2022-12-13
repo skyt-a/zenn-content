@@ -1,0 +1,11 @@
+{
+  "name": "zenn-content",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/RinGoku/zenn-content.git",
+  "author": "sakou-dtws <sakou@dtws-work.in>",
+  "license": "MIT",
+  "dependencies": {
+    "zenn-cli": "^0.1.133"
+  }
+}

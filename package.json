@@ -5,6 +5,11 @@
   "repository": "https://github.com/RinGoku/zenn-content.git",
   "author": "sakou-dtws <sakou@dtws-work.in>",
   "license": "MIT",
+  "scripts": {
+    "new": "zenn new:article",
+    "preview": "zenn preview",
+    "deploy": "zenn deploy"
+  },
   "dependencies": {
     "zenn-cli": "^0.1.133"
   }

@@ -28,7 +28,8 @@ published: false
 サーバーコンポーネントでクライアントコンポーネントでしか使えないモジュールをimportした時に発生します。
 特に考えさせられたのはutilファイルみたいなものを作成しようとしたとき。
 個人的にはhooksと純粋な関数や定数みたいな分け方より、`utils/form.ts`みたいな機能ベースでファイルを作ることが多いんですが、こうするとサーバーコンポーネントでも使えるモジュールとクライアントコンポーネントでしか使えないモジュール(hooksなど)が混在してしまい、よくこのエラーで怒られていました。
-なので、今までのやり方をそのまま踏襲すると問題が起きるので、app dirの気持ちになることが大事ですね。。。
+共通モジュールはクライアントでしか使えないものとそれ以外でファイルベースで分離することが求められそうです
+これに限らず今までのやり方をそのまま踏襲すると問題が起きるので、app dirの気持ちになることが大事ですね。。。
 
 ### unhandledRejection: Error [FirebaseError]: Messaging: This browser doesn't support the API's required to use the Firebase SDK. (messaging/unsupported-browser).
 
@@ -41,3 +42,4 @@ Firebase Cloud Messaging関連のモジュール実装時に発生した問題�
 
 これはQiitaの方で書きました
 https://qiita.com/sky_t/items/e41e46ea071a09c8dce1
+が、結局supabaseはやめてfirebaseに切り替えました。

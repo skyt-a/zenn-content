@@ -1,8 +1,8 @@
 ---
 title: "Next.js 13のapp dirでチケットアプリを作った"
-emoji: "👌"
+emoji: "🎫"
 type: "tech" # tech: 技術記事 / idea: アイデア
-topics: ["nextjs", "react", "vercel", "firebase"]
+topics: ["nextjs", "react", "vercel", "firebase", "個人開発", "firebasecloudme"]
 published: false
 ---
 
@@ -33,7 +33,7 @@ https://katacky.xyz/
 （`Remix`や`Nuxt`、`Solid.js`、`SvelteKit`あたりが他の候補でした)
 ちょうどGW中にGAになりましたね。
 https://nextjs.org/blog/next-13-4
-また言語は`TypeScript`を採用しています。もはや手放せませんね。
+またAPIサーバーとフロントのインターフェースには[tRPC](https://trpc.io/)を採用しています。
 
 ### スタイリング・UIフレームワーク
 普段は個人的に`emotion`や`styled-components`といったCSS in JS系のライブラリを使うことが多いのですが、今回`App Directory(React Server Component)`を使うということでこれらのライブラリは相性が悪いため、初めて巷で話題の`TailwindCSS`に触れてみることにしました。
@@ -48,6 +48,7 @@ https://nextjs.org/blog/next-13-4
 
 ### ホスティング
 ホスティング先は`Next.js`との相性の良さから`Vercel`にしました。
+`Firebase`を使っているので、[Firebase Hosting](https://firebase.google.com/docs/hosting/frameworks/nextjs?hl=ja)もありかなと思ったんですが、まだまだ安定版ではないようなので今回は見送りました。
 
 ### データベース
 今回は[PlanetScale](https://planetscale.com/)を採用しています。
@@ -77,6 +78,8 @@ QRコードの読み取りは[jsqr](https://github.com/cozmo/jsQR)、作成・�
 ### PWA対応
 プッシュ通知を実現したかったこともあり、`PWA`に対応しています。
 ぜひ`ホーム画面に追加`して使ってみてください！
+![](/images/e5be4aeca24fbd/icon.jpg =250x)
+*ちゃんとアイコンも表示されます*
 
 ### チケットをスケジュール発行できるようにした
 私と彼女の要件だと月に1回チケットを私は1枚、彼女は2枚発行する必要があるのですが、毎月手作業でやるのは面倒くさいと思ったのでスケジューリング機能をつけて自動化しました。
@@ -88,7 +91,7 @@ QRコードの読み取りは[jsqr](https://github.com/cozmo/jsQR)、作成・�
   "crons": [
     {
       "path": "/api/ticket/schedule",
-      "schedule": "0 5 * * *"　// 毎日AM5:00に↑のAPIが呼び出せる
+      "schedule": "0 5 * * *"　// 毎日AM5:00に↑のAPIが呼び出される
     }
   ]
 }
@@ -106,22 +109,66 @@ https://vercel.com/blog/cron-jobs#limits-of-cron-jobs-and-vercel-functions
 ## App Directory(Next.js)
 App Directoryについての詳しい説明は他に素晴らしい記事がいくらでもあるので割愛します。
 とりあえず[公式ドキュメント](https://nextjs.org/docs)に一通り目を通して、あとはトライアンドエラーの精神で頑張ろうと意気込みました。
-所感:
-・Server Component内で非同期処理を直感的にasync-awaitで書けるのは素晴らしい
-・状態管理やデータキャッシュ周りはクライアントからサーバーサイドに寄せるような構成が主流になりそうな雰囲気
-・出たばかりの機能ということもあり、バグのような挙動もいくつか見られた（詳しくは後述します）
-・周辺ライブラリがまだ対応できていないことが多い
+正直まだまだちゃんと使いこなしているとはいえず、どういう設計がうまく合うのかはこれからも模索していく必要がありそうです。
+サーバーサイドのキャッシュ戦略がまだよくわかっていないところもあるのでちゃんとキャッチアップしたいですね。
+
+### 所感
+#### Server Component内で非同期処理をasync-awaitで書けるのは素晴らしい
+こんな感じで書けて非常に直観的。個人的には`getServerSideProps`の中で書くよりもぱっと見でやりたいことがわかりやすいです。
+```ts
+export const Profile = async () => {
+  const user = await getUserInfo();
+  if (!user) {
+    return null;
+  }
+  ...
+```
+
+#### 状態管理やデータキャッシュ周りはクライアントからサーバーサイドに寄せるような構成が主流になりそうな雰囲気
+基本的にAPIからのデータのfetchもServerComponent内でやることが多く、`ReactQuery`や`SWR`でやっていたようなクライアントでのデータキャッシュみたいな機構がそこまで必要じゃなくなって来るのかなと感じました。
+今回ぐらいのシンプルなアプリだと管理したいようなステートもそこまで多くなく、今回は特にクライアント側の状態管理系のライブラリは使用していません。
+
+#### バグのような挙動もいくつか見られた
+ベータ版(GW中にGAになりましたが)ということもあり、ところどころ動作が不安定になることがあります。
+謎にエラーが発生したと思いきや、何もせずにもう一度ページを開くと直ったり、実装が悪いのか何かしらのバグなのかわからない状態で開発を進めるシーンが何回かありました。
+ただこれは今後改善されていくはずなので安定するのを期待して待ちたいところです。
+いくつか気になった事象は後述しています。
+
+#### 周辺ライブラリがまだ対応できていないことが多い
+これも前述した通りまだまだ出たばかりなので仕方のないことですが、周辺ライブラリが対応できないことが多く、公式のドキュメント通りに実装してもうまく動かないことが何回かありました。
+例えばtRPCは[公式のインテグレーションガイド](https://trpc.io/docs/nextjs/setup)通りに進めると、クライアントからのAPI呼び出しでエラーが起きました。
+根本的な原因はわからないですが、今回は`createNextApiHandler`を使うのでなく、以下のように`fetchRequestHandler`を使うことでなんとか動くようになりました。
+
+```ts:app/api/trpc/[trpc]/route.ts
+import { fetchRequestHandler } from "@trpc/server/adapters/fetch";
+import { appRouter } from "~/servers";
+
+const handler = (request: Request) => {
+  return fetchRequestHandler({
+    endpoint: "/api/trpc",
+    router: appRouter,
+    ...
+  });
+};
+
+export const GET = handler;
+export const POST = handler;
+```
 
 ## TailwindCSS
 開発前には個人的には`class`属性がやたら長くなることと、実際のCSSのプロパティと`TailwindCSS`で設定するクラス名に結構ギャップがあって都度調べないといけないところが気になっていました。
-ただ実際に開発で使ってみると見えていなかったいいところもかなりありました。
-所感:
+ただ実際に開発で使ってみると見えていなかったいいところもありました。
+
+### 簡単に所感
 ・`React`のようなコンポーネント単位でスタイルが閉じるような環境では`class`属性の長さはあまり気にならない
-・VSCodeの拡張機能である程度補完は効く
-・ダークモード対応が楽
+・[VSCodeの拡張機能](https://marketplace.visualstudio.com/items?itemName=bradlc.vscode-tailwindcss)である程度補完は効く(なぜかたまに効かないことがある？)
+・ダークモード対応が楽！
 ・今回あまり使いこなせていないが、デザインシステムをかっちり構築したいようなアプリではかなり重宝しそう
 
 ## 開発中遭遇したエラーや問題
+
+開発中遭遇したエラーや問題をいくつか書いておきます。
+同じ事象に遭遇した方の助けになれば幸いです。
 
 ### You're importing a component that needs useState. It only works in a Client Component but none of its parents are marked with "use client", so they're Server Components by default.
 
@@ -150,9 +197,12 @@ https://qiita.com/sky_t/items/e41e46ea071a09c8dce1
 この場合はVSCodeのTypeScriptサーバーを再起動すると直りました。まだベータだからなのか私の環境に問題があるのかは不明です。
 機能としては素晴らしいので今後のアップデートに期待です。
 
-### おわりに
+## おわりに
 `App Directory`は個人的には総合的に見れば開発体験上がった感覚ですし、GAになったことで今後さらに重要になっていくことでしょう。
 いくつか見えてるバグはあるんですが、ゴールデンウィークの短い期間での実装でなんとか形にできてよかったです(`WakaTime`によると大体40時間くらいで実装できたみたいです)。
 この後は時間見つけて[astro](https://astro.build/)使ってLP作ってみたり、機能追加していきたいです。
-よければ使ってみてください！
+`App Directory`はつい先日GAになったばかりですが、最近のアップデートを見るに力の入れようが尋常じゃないように見えるので今後どんな機能がリリースされるのか楽しみですね。
+今回のアプリもなんとかNext.js側のアップデートについていきたいところです。
+
+`Katacky`、よければ使ってみてください！
 https://katacky.xyz/

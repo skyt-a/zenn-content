@@ -1,9 +1,9 @@
 ---
-title: "Next.js 13のapp dirでチケットアプリを作った"
+title: "Next.js13のapp directoryでチケット共有アプリを作ってみた"
 emoji: "🎫"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["nextjs", "react", "vercel", "firebase", "個人開発", "typescript", "firebasecloudme"]
-published: false
+published: true
 ---
 
 ## はじめに
@@ -29,14 +29,14 @@ https://katacky.xyz/
 ## 技術スタック
 
 ### フロントエンド + APIサーバー
-アプリを作るにあたって、フレームワーク・UIライブラリを何にするかは悩みましたが、今回は`Next.js` 13で登場した`App Directory`を使ってみたいなと思ったので`Next.js`に決定しました。
+アプリを作るにあたって、フレームワーク・UIライブラリを何にするかは悩みましたが、今回は`Next.js` 13で登場した`app directory`を使ってみたいなと思ったので`Next.js`に決定しました。
 （`Remix`や`Nuxt`、`Solid.js`、`SvelteKit`あたりが他の候補でした)
 ちょうどGW中にGAになりましたね。
 https://nextjs.org/blog/next-13-4
 またAPIサーバーとフロントのインターフェースには[tRPC](https://trpc.io/)を採用しています。
 
 ### スタイリング・UIフレームワーク
-普段は個人的に`emotion`や`styled-components`といったCSS in JS系のライブラリを使うことが多いのですが、今回`App Directory(React Server Component)`を使うということでこれらのライブラリは相性が悪いため、初めて巷で話題の`TailwindCSS`に触れてみることにしました。
+普段は個人的に`emotion`や`styled-components`といったCSS in JS系のライブラリを使うことが多いのですが、今回`app directory(React Server Component)`を使うということでこれらのライブラリは相性が悪いため、初めて巷で話題の`TailwindCSS`に触れてみることにしました。
 またUIフレームワークとして[shadcn/ui](https://github.com/shadcn/ui)というフレームワークを採用しています。
 これは`Radix UI`というHeadlessなUIフレームワークと`TailwindCSS`を組み合わせたもので、カスタマイズが容易そうだったので採用しました。
 [Mantine](https://mantine.dev/)も良さそうだったんですが、`emotion`依存が気になったので今回は見送りました。
@@ -106,8 +106,8 @@ https://vercel.com/blog/cron-jobs#limits-of-cron-jobs-and-vercel-functions
 
 ## 開発してみて感じたこと
 
-## App Directory(Next.js)
-App Directoryについての詳しい説明は他に素晴らしい記事がいくらでもあるので割愛します。
+## app directory(Next.js)
+app directoryについての詳しい説明は他に素晴らしい記事がいくらでもあるので割愛します。
 とりあえず[公式ドキュメント](https://nextjs.org/docs)に一通り目を通して、あとはトライアンドエラーの精神で頑張ろうと意気込みました。
 正直まだまだちゃんと使いこなしているとはいえず、どういう設計がうまく合うのかはこれからも模索していく必要がありそうです。
 サーバーサイドのキャッシュ戦略がまだよくわかっていないところもあるのでちゃんとキャッチアップしたいですね。
@@ -197,10 +197,10 @@ https://qiita.com/sky_t/items/e41e46ea071a09c8dce1
 機能としては素晴らしいので今後のアップデートに期待です。
 
 ## おわりに
-`App Directory`は個人的には総合的に見れば開発体験上がった感覚ですし、GAになったことで今後さらに重要になっていくことでしょう。
+`app directory`は個人的には総合的に見れば開発体験上がった感覚ですし、GAになったことで今後さらに重要になっていくことでしょう。
 いくつか見えてるバグはあるんですが、ゴールデンウィークの短い期間での実装でなんとか形にできてよかったです(`WakaTime`によると大体40時間くらいで実装できたみたいです)。
 この後は時間見つけて[astro](https://astro.build/)使ってLP作ってみたり、機能追加していきたいです。
-`App Directory`はつい先日GAになったばかりですが、最近のアップデートを見るに力の入れようが尋常じゃないように見えるので今後どんな機能がリリースされるのか楽しみですね。
+`app directory`はつい先日GAになったばかりですが、最近のアップデートを見るに力の入れようが尋常じゃないように見えるので今後どんな機能がリリースされるのか楽しみですね。
 今回のアプリもなんとかNext.js側のアップデートについていきたいところです。
 
 `Katacky`、よければ使ってみてください！

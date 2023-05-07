@@ -2,7 +2,7 @@
 title: "Next.js 13のapp dirでチケットアプリを作った"
 emoji: "🎫"
 type: "tech" # tech: 技術記事 / idea: アイデア
-topics: ["nextjs", "react", "vercel", "firebase", "個人開発", "firebasecloudme"]
+topics: ["nextjs", "react", "vercel", "firebase", "個人開発", "typescript", "firebasecloudme"]
 published: false
 ---
 

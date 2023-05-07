@@ -48,7 +48,7 @@ https://nextjs.org/blog/next-13-4
 今回は[PlanetScale](https://planetscale.com/)を採用しています。
 Firebaseに依存しているから`FireStore`もありかなと思ったんですが、個人的には`RDB`の方が好みなので今回は採用を見送りました。
 ちなみに開発当初はFirebaseではなく、[Supabase](https://supabase.com/)を使っていて、DBも`Supabase`の`PostgreSQL`を使用していたのですが、後述する`Firebase Cloud Messaging`が使いたくなった関係で`Supabase`依存をやめ、`PlanetScale`へ移行することになりました(Authも合わせて移行しました)。
-ちゃんと要件固めとかないと。。。
+技術選定の前にちゃんと要件固めとかないと。。。
 
 ## こだわりポイント
 
@@ -81,13 +81,11 @@ QRコードの読み取りは[jsqr](https://github.com/cozmo/jsQR)、作成・�
 
 ```
 
-ただ下にあるように
+ただ↓にあるように
 https://vercel.com/blog/cron-jobs#limits-of-cron-jobs-and-vercel-functions
 >While in beta, Vercel Cron Jobs are free on all plans. However, it'll be a paid feature for general availability.
 
 とのことなので、ベータが外れた暁には無料で使えなくなる可能性が高そうですね。
-
-### スケ
 
 ## 開発してみて感じたこと
 
@@ -104,7 +102,7 @@ App Directoryについての詳しい説明は他に素晴らしい記事がい�
 ・VSCodeの拡張機能である程度補完は効く
 ・ダークモード対応が楽
 
-## 遭遇した問題
+## 開発中遭遇したエラーや問題
 
 ### You're importing a component that needs useState. It only works in a Client Component but none of its parents are marked with "use client", so they're Server Components by default.
 
@@ -129,4 +127,8 @@ https://qiita.com/sky_t/items/e41e46ea071a09c8dce1
 が、結局supabaseはやめてfirebaseに切り替えました。
 
 ### TypedRouteが正しいパスを指定してもエラーになる
-[Next.js@13.2](https://nextjs.org/blog/next-13-2#statically-typed-links)で`Typed Link`がベータ提供されるようになったので嬉々として利用していたんですが、たまに正しいパスを指定しているのにTypeScriptエラーが出ることがありました。この場合はVSCodeのTypeScriptサーバーを再起動すると直りました。まだベータだからなのか私の環境に問題があるのかは不明です。機能としては素晴らしいので今後のアップデートに期待です。
+[Next.js@13.2](https://nextjs.org/blog/next-13-2#statically-typed-links)で`Typed Link`がベータ提供されるようになったので嬉々として利用していたんですが、たまに正しいパスを指定しているのにTypeScriptエラーが出ることがありました。
+この場合はVSCodeのTypeScriptサーバーを再起動すると直りました。まだベータだからなのか私の環境に問題があるのかは不明です。
+機能としては素晴らしいので今後のアップデートに期待です。
+
+### 

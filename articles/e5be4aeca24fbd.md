@@ -54,6 +54,9 @@ https://nextjs.org/blog/next-13-4
 Firebaseに依存しているから`FireStore`もありかなと思ったんですが、個人的には`RDB`の方が好みなので今回は採用を見送りました。
 ちなみに開発当初はFirebaseではなく、[Supabase](https://supabase.com/)を使っていて、DBも`Supabase`の`PostgreSQL`を使用していたのですが、後述する`Firebase Cloud Messaging`が使いたくなった関係で`Supabase`依存をやめ、`PlanetScale`へ移行することになりました(Authも合わせて移行しました)。
 技術選定の前にちゃんと要件固めとかないと。。。
+またORマッパーとして[Prisma](https://www.prisma.io)を採用しています。
+
+結果的に[T3Stack](https://create.t3.gg/en/introduction)と呼ばれる構成になりました。
 
 ## こだわりポイント
 

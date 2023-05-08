@@ -14,7 +14,7 @@ published: true
 https://katacky.xyz/
 
 ソースはこちら
-https://github.com/sky-a/Katacky
+https://github.com/skyt-a/Katacky
 
 家族やカップル、友達の間で使えるオリジナルチケットを作成、譲渡、使用できるWebアプリです。
 スケジュール設定をすることであるユーザーに月に2枚チケットを配布するみたいなこともできます。

@@ -36,7 +36,9 @@ https://github.com/skyt-a/Katacky
 （`Remix`や`Nuxt`、`Solid.js`、`SvelteKit`あたりが他の候補でした)
 ちょうどGW中にGAになりましたね。
 https://nextjs.org/blog/next-13-4
-またAPIサーバーとフロントのインターフェースには[tRPC](https://trpc.io/)を採用しています。
+~またAPIサーバーとフロントのインターフェースには[tRPC](https://trpc.io/)を採用しています。~
+2023/05/28追記
+Next.jsの[Server Action](https://nextjs.org/docs/app/building-your-application/data-fetching/server-actions)が発表されたことを受けて、Query系のAPIはServerComponent内で呼出し、Mutation系はServerActionを使用することで、tRPCを導入する理由の一つだったフロントエンドのコードベースの中からシームレスにバックエンドAPIを呼び出すという要件を満たせるようになったので現在はtRPCは使用していません。
 
 ### スタイリング・UIフレームワーク
 普段は個人的に`emotion`や`styled-components`といったCSS in JS系のライブラリを使うことが多いのですが、今回`app directory(React Server Component)`を使うということでこれらのライブラリは相性が悪いため、初めて巷で話題の`TailwindCSS`に触れてみることにしました。

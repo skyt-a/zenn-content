@@ -96,7 +96,7 @@ QRコードの読み取りは[jsqr](https://github.com/cozmo/jsQR)、作成・�
   "crons": [
     {
       "path": "/api/ticket/schedule",
-      "schedule": "0 5 * * *"　// 毎日AM5:00に↑のAPIが呼び出される
+      "schedule": "0 20 * * *"　// 毎日AM5:00に↑のAPIが呼び出される(Vercel CronはUTC基準なので注意)
     }
   ]
 }

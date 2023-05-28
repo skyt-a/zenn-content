@@ -53,7 +53,7 @@ Next.jsの[Server Action](https://nextjs.org/docs/app/building-your-application/
 
 ### ホスティング
 ホスティング先は`Next.js`との相性の良さから`Vercel`にしました。
-`Firebase`を使っているので、[Firebase Hosting](https://firebase.google.com/docs/hosting/frameworks/nextjs?hl=ja)もありかなと思ったんですが、まだまだ安定版ではないようなので今回は見送りました。
+`Firebase`を使っているので、[Firebase Hosting](https://firebase.google.com/docs/hosting/frameworks/nextjs?hl=ja)もありかなと思ったんですが、Next.jsのホスティング先としてはまだまだ安定版ではないようなので今回は見送りました。
 
 ### データベース
 今回は[PlanetScale](https://planetscale.com/)を採用しています。
